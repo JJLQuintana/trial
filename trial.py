@@ -24,6 +24,5 @@ print("Your Computer Name is:" + hostname)
 print("Your Computer IP Address is:" + IPAddr)
 
 location_data = get_location()
->>>>>>> Stashed changes
 print("The user's IPv4 address and current location is as follows:")
 print(get_location())
