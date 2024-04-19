@@ -1,9 +1,14 @@
+from flask import Flask 
+from flask import request
 import requests
-import socket
+
+app = Flask(__name__)
+
 def get_ip():
-    response = requests.get('https://api.ipify.org?format=json').json()
+    response = requests.get('https://api64.ipify.org?format=json').json()
     return response["ip"]
 
+@app.route("/")
 def get_location():
     ip_address = get_ip()
     response=requests.get(f'https://ipapi.co/{ip_address}/json/').json()
@@ -12,17 +17,10 @@ def get_location():
         "City": response.get("city"),
         "Region": response.get("region"),
         "Country": response.get("country_name"),
-        
-    }
+	    "Time Zone" : response.get("timezone"),
+	    "ISP" : response.get("org"),
+	    "Latitude" : response.get("latitude"),
+	"Longitude" :response.get("longitude"), }
     return location_data
-
-
-hostname = socket.gethostname()
-IPAddr = socket.gethostbyname(hostname)
-
-print("Your Computer Name is:" + hostname)
-print("Your Computer IP Address is:" + IPAddr)
-
-location_data = get_location()
-print("The user's IPv4 address and current location is as follows:")
-print(get_location())
+if __name__ == "__main__":
+    app.run()
